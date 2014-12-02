@@ -10,7 +10,7 @@ require 'terminal-table'
 HighLine.track_eof = false # Fix for built-in Ruby
 Signal.trap("INT") {} # Suppress backtrace when exiting command
 
-program :version, Venice::VERSION
+program :version, LegacyVenice::VERSION
 program :description, 'A command-line interface for verifying Apple In-App Purchase receipts'
 
 program :help, 'Author', 'Mattt Thompson <m@mattt.me>'
@@ -32,7 +32,7 @@ command :verify do |c|
     say_error "Missing receipt argument" and abort unless file = args.first
     say_error "Receipt file does not exist" unless File.exist?(file)
 
-    client = options.sandbox ? Venice::Client.development : Venice::Client.production
+    client = options.sandbox ? LegacyVenice::Client.development : LegacyVenice::Client.production
     client.shared_secret = options.secret if options.secret
 
     begin

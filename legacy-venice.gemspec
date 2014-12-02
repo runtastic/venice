@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "venice/version"
+require "legacy-venice/version"
 
 Gem::Specification.new do |s|
-  s.name        = "venice"
+  s.name        = "legacy-venice"
   s.authors     = ["Mattt Thompson"]
   s.email       = "m@mattt.me"
   s.license     = "MIT"
   s.homepage    = "http://nomad-cli.com"
-  s.version     = Venice::VERSION
+  s.version     = LegacyVenice::VERSION
   s.platform    = Gem::Platform::RUBY
   s.summary     = "iTunes In-App Purchase Receipt Verification"
   s.description = ""

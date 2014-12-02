@@ -2,7 +2,7 @@ require 'json'
 require 'net/https'
 require 'uri'
 
-module Venice
+module LegacyVenice
   ITUNES_PRODUCTION_RECEIPT_VERIFICATION_ENDPOINT = "https://buy.itunes.apple.com/verifyReceipt"
   ITUNES_DEVELOPMENT_RECEIPT_VERIFICATION_ENDPOINT = "https://sandbox.itunes.apple.com/verifyReceipt"
 
