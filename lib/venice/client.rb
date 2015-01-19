@@ -30,24 +30,16 @@ module Venice
 
     def verify!(data, options = {})
       @verification_url ||= ITUNES_DEVELOPMENT_RECEIPT_VERIFICATION_ENDPOINT
+      self.shared_secret = options.fetch(:shared_secret, nil)
 
       json = json_response_from_verifying_data(data)
       status, receipt_attributes = json['status'].to_i, json['receipt']
 
       case status
       when 0, 21006
-        receipt = Receipt.new(receipt_attributes)
-
-        # From Apple docs:
-        # > Only returned for iOS 6 style transaction receipts for auto-renewable subscriptions.
-        # > The JSON representation of the receipt for the most recent renewal
-        if latest_receipt_info_attributes = json['latest_receipt_info']
-          receipt.latest_receipt = Receipt.new(latest_receipt_info_attributes)
-        end
-
-        return receipt
+        return Receipt.new(json)
       else
-        raise Receipt::VerificationError.new(status, receipt)
+        raise Receipt::VerificationError.new(status, receipt_attributes)
       end
     end
 

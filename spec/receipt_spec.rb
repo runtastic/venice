@@ -40,18 +40,18 @@ describe Venice::Receipt do
       }
     end
 
-    subject { Venice::Receipt.new(response['receipt']) }
+    subject { Venice::Receipt.new(response) }
 
-    its(:bundle_id) { "com.foo.bar" }
-    its(:application_version) { "2" }
-    its(:in_app) { should be_instance_of Array }
-    its(:original_application_version) { "1" }
+    its(:bundle_id)              { "com.foo.bar" }
+    its(:application_version)    { "2" }
+    its(:in_app)                 { should be_instance_of Array }
     its(:original_purchase_date) { should be_instance_of DateTime }
-    its(:expires_at) { should be_instance_of DateTime }
-    its(:receipt_type) { "Production" }
-    its(:adam_id) { 7654321 }
-    its(:download_id) { 1234567 }
-    its(:requested_at) { should be_instance_of DateTime }
+    its(:expires_date)           { should be_instance_of DateTime }
+    its(:receipt_type)           { "Production" }
+    its(:adam_id)                { 7654321 }
+    its(:download_id)            { 1234567 }
+    its(:requested_at)           { should be_instance_of DateTime }
+    its(:original_application_version) { "1" }
 
     describe "#verify!" do
 

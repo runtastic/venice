@@ -20,7 +20,7 @@ module Venice
 
     # The date and time this transaction occurred. This value corresponds to the
     # transaction’s transactionDate property.
-    attr_reader :purchased_at
+    attr_reader :purchase_date
 
     # A string that the App Store uses to uniquely identify the application that created
     # the payment transaction. If your server supports multiple applications, you can use
@@ -37,22 +37,27 @@ module Venice
     attr_accessor :original
 
     # For auto-renewable subscriptions, returns the date the subscription will expire
-    attr_reader :expires_at
+    attr_reader :expires_date
+
+    attr_reader :web_order_line_item_id
 
     # For a transaction that was canceled by Apple customer support, the time and date of the cancellation.
     attr_reader :cancellation_at
 
 
     def initialize(attributes = {})
-      @quantity = Integer(attributes['quantity']) if attributes['quantity']
-      @product_id = attributes['product_id']
-      @transaction_id = attributes['transaction_id']
-      @purchased_at = DateTime.parse(attributes['purchase_date']) if attributes['purchase_date']
-      @app_item_id = attributes['app_item_id']
+      @quantity                = Integer(attributes['quantity']) if attributes['quantity']
+      @product_id              = attributes['product_id']
+      @transaction_id          = attributes['transaction_id']
+      @purchase_date           = DateTime.parse(
+        attributes['purchase_date']
+      ) if attributes['purchase_date']
+      @app_item_id             = attributes['app_item_id']
+      @web_order_line_item_id  = attributes['web_order_line_item_id']
       @version_external_identifier = attributes['version_external_identifier']
 
       # expires_date is in ms since the Epoch, Time.at expects seconds
-      @expires_at = Time.at(attributes['expires_date'].to_i / 1000) if attributes['expires_date']
+      @expires_date = Time.at(attributes['expires_date'].to_i / 1000) if attributes['expires_date']
       # cancellation_date is in ms since the Epoch, Time.at expects seconds
       @cancellation_date = Time.at(attributes['cancellation_date'].to_i / 1000) if attributes['cancellation_date']
 
@@ -72,12 +77,12 @@ module Venice
         :quantity => @quantity,
         :product_id => @product_id,
         :transaction_id => @transaction_id,
-        :purchase_date => (@purchased_at.httpdate rescue nil),
+        :purchase_date => (@purchase_date.httpdate rescue nil),
         :original_transaction_id => (@original.transaction_id rescue nil),
-        :original_purchase_date => (@original.purchased_at.httpdate rescue nil),
+        :original_purchase_date => (@original.purchase_date.httpdate rescue nil),
         :app_item_id => @app_item_id,
         :version_external_identifier => @version_external_identifier,
-        :expires_at => (@expires_at.httpdate rescue nil),
+        :expires_date => (@expires_date.httpdate rescue nil),
         :cancellation_at => (@cancellation_at.httpdate rescue nil)
       }
     end
