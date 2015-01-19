@@ -47,9 +47,7 @@ module Venice
         )
       end
       if attributes['expiration_date']
-        @expires_date = Time.at(
-          attributes['expiration_date'].to_i / 1000
-        ).to_datetime
+        @expires_date = DateTime.parse(attributes['expiration_date'])
       end
       if attributes['request_date']
         @requested_at = DateTime.parse(attributes['request_date'])

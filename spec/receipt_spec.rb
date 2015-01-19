@@ -19,7 +19,7 @@ describe Venice::Receipt do
           "original_purchase_date_ms" => "1400292585000",
           "original_purchase_date_pst" => "2014-05-16 19:09:45 America/Los_Angeles",
           "original_application_version" => "1",
-          "expiration_date" => "1401924047883",
+          "expiration_date" => "2014-05-28 14:14:54 Etc/GMT",
           "in_app" => [
             {
               "quantity" => "1",
