@@ -81,6 +81,7 @@ module Venice
         :original_transaction_id => (@original.transaction_id rescue nil),
         :original_purchase_date => (@original.purchase_date.httpdate rescue nil),
         :app_item_id => @app_item_id,
+        :web_order_line_item_id => @web_order_line_item_id,
         :version_external_identifier => @version_external_identifier,
         :expires_date => (@expires_date.httpdate rescue nil),
         :cancellation_at => (@cancellation_at.httpdate rescue nil)
