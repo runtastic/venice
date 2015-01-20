@@ -98,6 +98,15 @@ module Venice
       self.to_hash.to_json
     end
 
+    def expired?
+      return false if expires_date && expires_date > DateTime.now
+      return false if expires_date.nil? && in_app.empty? && latest_receipt_info.empty?
+      return false if !in_app.empty? && in_app.any?{ |rec| !rec.expired? }
+      return false if !latest_receipt_info.empty? && latest_receipt_info.any?{ |rec| !rec.expired? }
+      true
+    end
+
+
     class << self
       def verify(data, options = {})
         verify!(data, options) rescue false

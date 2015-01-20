@@ -20,9 +20,10 @@ describe Venice::InAppReceipt do
         "version_external_identifier" => "123",
         "app_item_id" => 'com.foo.app1',
         "web_order_line_item_id" => '123456',
-        "expires_date" => "2014-06-28 07:47:53 America/Los_Angeles"
+        "expires_date" => expires_date
       }
     end
+    let(:expires_date) { "2014-06-28 07:47:53 America/Los_Angeles" }
 
     subject(:in_app_receipt) do
       Venice::InAppReceipt.new attributes
@@ -51,6 +52,21 @@ describe Venice::InAppReceipt do
                                           :purchase_date => "Wed, 28 May 2014 14:47:53 GMT",
                                           :original_purchase_date => "Wed, 28 May 2014 14:47:53 GMT"
                                         )
+    end
+
+    context "expired receipt" do
+      let(:expires_date) { '2010-06-28 07:47:53' }
+      its(:expired?)     { should be_true }
+    end
+
+    context "receipt has no expiration date" do
+      let(:expires_date) { nil }
+      its(:expired?)     { should be_false }
+    end
+
+    context "unexpired receipt" do
+      let(:expires_date) { '2222-06-28' }
+      its(:expired?)     { should be_false }
     end
 
 

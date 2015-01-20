@@ -93,5 +93,9 @@ module Venice
       self.to_hash.to_json
     end
 
+    def expired?
+      !!(expires_date && expires_date < DateTime.now)
+    end
+
   end
 end
