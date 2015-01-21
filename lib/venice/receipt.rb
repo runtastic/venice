@@ -139,9 +139,9 @@ module Venice
       attr_accessor :code
       attr_accessor :receipt
 
-      def initialize(code, receipt)
-        @code = Integer(code)
-        @receipt = receipt
+      def initialize(code, receipt=nil)
+        @code    = Integer(code)
+        @receipt = receipt if receipt
       end
 
       def message
