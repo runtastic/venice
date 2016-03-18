@@ -40,6 +40,7 @@ module Venice
     attr_reader :expires_date
 
     attr_reader :web_order_line_item_id
+    attr_reader :is_trial_period
 
     # For a transaction that was canceled by Apple customer support, the time and date of the cancellation.
     attr_reader :cancellation_at
@@ -55,6 +56,7 @@ module Venice
       @app_item_id             = attributes['app_item_id']
       @web_order_line_item_id  = attributes['web_order_line_item_id']
       @version_external_identifier = attributes['version_external_identifier']
+      @is_trial_period = attributes['is_trial_period']
 
       # expires_date is in ms since the Epoch, Time.at expects seconds
       @expires_date      = DateTime.parse(attributes['expires_date']) if attributes['expires_date']
@@ -84,7 +86,8 @@ module Venice
         :web_order_line_item_id => @web_order_line_item_id,
         :version_external_identifier => @version_external_identifier,
         :expires_date => (@expires_date.httpdate rescue nil),
-        :cancellation_at => (@cancellation_at.httpdate rescue nil)
+        :cancellation_at => (@cancellation_at.httpdate rescue nil),
+        :is_trial_period => (@is_trial_period rescue nil)
       }
     end
     alias_method :to_h, :to_hash
