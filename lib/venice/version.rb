@@ -1,3 +1,3 @@
 module Venice
-  VERSION = "0.3.2.paperlesspost"
+  VERSION = "0.3.3"
 end
