@@ -98,6 +98,7 @@ describe Venice::Receipt do
     its(:latest_receipt_info)    { should be_instance_of Array }
     its(:latest_receipt_info)    { should be_empty }
     its(:latest_receipt)         { should be_nil }
+    its(:is_trial_period)        { "false" }
 
     context "expiration date is given" do
       let(:expiration_date) { '2014-01-01 05:03:02' }

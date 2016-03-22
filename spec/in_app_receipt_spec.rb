@@ -16,7 +16,7 @@ describe Venice::InAppReceipt do
         "original_purchase_date" => "2014-05-28 14:47:53 Etc/GMT",
         "original_purchase_date_ms" => "1401288473000",
         "original_purchase_date_pst" => "2014-05-28 07:47:53 America/Los_Angeles",
-        "is_trial_period" => false,
+        "is_trial_period" => "false",
         "version_external_identifier" => "123",
         "app_item_id" => 'com.foo.app1',
         "web_order_line_item_id" => '123456',
@@ -50,7 +50,8 @@ describe Venice::InAppReceipt do
                                           :product_id => "com.foo.product1",
                                           :transaction_id => "1000000070107235",
                                           :purchase_date => "Wed, 28 May 2014 14:47:53 GMT",
-                                          :original_purchase_date => "Wed, 28 May 2014 14:47:53 GMT"
+                                          :original_purchase_date => "Wed, 28 May 2014 14:47:53 GMT",
+                                          :is_trial_period => "false"
                                         )
     end
 
