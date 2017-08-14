@@ -19,7 +19,7 @@ describe Venice::Receipt do
           "original_purchase_date_ms"  => "1400292585000",
           "original_purchase_date_pst" => "2014-05-16 19:09:45 America/Los_Angeles",
           "original_application_version" => "1",
-          "expiration_date"              => expiration_date,
+          "expiration_date" => expiration_date
         }
       }
     end
@@ -37,9 +37,9 @@ describe Venice::Receipt do
           "original_purchase_date"     => "2014-05-28 14:47:53 Etc/GMT",
           "original_purchase_date_ms"  => "1401288473000",
           "original_purchase_date_pst" => "2014-05-28 07:47:53 America/Los_Angeles",
-          "expires_date"               => in_app_expires_date, 
+          "expires_date"               => in_app_expires_date,
           "is_trial_period"            => "false"
-        }] 
+        }]
       }
     end
     let(:in_app_expires_date) { "2014-06-28 14:47:53 Etc/GMT" }
@@ -111,7 +111,7 @@ describe Venice::Receipt do
     end
 
     context "latest_receipt_info given" do
-      let(:response) do 
+      let(:response) do
         base.merge(latest_receipt_info).merge(
           'latest_receipt' => 'some receipt'
         )
@@ -152,7 +152,7 @@ describe Venice::Receipt do
       end
 
       context "no expiration date, but in_app/latest_receipt_info with expires_date" do
-        let(:response) do 
+        let(:response) do
           base['receipt'].merge!(in_app)
           base.merge(latest_receipt_info).merge(
             'latest_receipt' => 'some receipt'
@@ -180,7 +180,37 @@ describe Venice::Receipt do
           its(:expired?)            { should be_false }
         end
       end
+    end
 
+    context "with pending renewal information" do
+      let(:pending_renewal_info) do
+        {
+          "pending_renewal_info" => [
+            {
+              "auto_renew_product_id"=>"com.foo.product1",
+              "original_transaction_id"=>"1000000061051111",
+              "product_id"=>"com.foo.product1",
+              "auto_renew_status"=>0,
+              "is_in_billing_retry_period"=>0,
+              "expiration_intent"=>1
+            }
+          ]
+        }
+      end
+      let(:response) do
+        base.merge(pending_renewal_info)
+      end
+
+      it "parses the pending rerenewal information" do
+        expect(subject.to_hash[:pending_renewal_info]).to eql([{ :expiration_intent => 1,
+                                                                 :auto_renew_status => 0,
+                                                                 :auto_renew_product_id=>"com.foo.product1",
+                                                                 :is_in_billing_retry_period=>false,
+                                                                 :product_id=>"com.foo.product1",
+                                                                 :price_consent_status=>nil,
+                                                                 :cancellation_reason=>nil
+                                                               }])
+      end
     end
 
   end
