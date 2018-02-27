@@ -11,18 +11,17 @@ module Venice
 
 
     def initialize(attributes)
-      @expiration_intent = Integer(attributes['expiration_intent']) if attributes['expiration_intent']
-      @auto_renew_status = Integer(attributes['auto_renew_status']) if attributes['auto_renew_status']
+      @expiration_intent = attributes['expiration_intent'].to_i unless attributes['expiration_intent'].nil?
+      @auto_renew_status = attributes['auto_renew_status'].to_i unless attributes['auto_renew_status'].nil?
       @auto_renew_product_id = attributes['auto_renew_product_id']
+
       if attributes['is_in_billing_retry_period']
-        @is_in_billing_retry_period = (attributes[is_in_billing_retry_period] == "1" ? true : false) 
+        @is_in_billing_retry_period = attributes['is_in_billing_retry_period'] == '1' ? true : false
       end
 
       @product_id = attributes['product_id']
-
-      #TODO find an receipt to check these two fields
-      @price_consent_status = Integer(attributes['price_consent_status']) if attributes['price_consent_status']
-      @cancellation_reason = Integer(attributes['cancellation_reason']) if attributes['cancellation_reason']
+      @price_consent_status = attributes['price_consent_status'].to_i unless attributes['price_consent_status'].nil?
+      @cancellation_reason = attributes['cancellation_reason'].to_i unless attributes['cancellation_reason'].nil?
     end
 
     def to_hash

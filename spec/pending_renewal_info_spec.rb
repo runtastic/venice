@@ -5,7 +5,7 @@ describe Venice::PendingRenewalInfo do
   describe ".new" do
 
     let(:attributes) {
-      { 
+      {
         "auto_renew_product_id"=>"com.foo.product1",
         "original_transaction_id"=>"37xxxxxxxxx89",
         "product_id"=>"com.foo.product1",

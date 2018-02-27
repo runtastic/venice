@@ -190,9 +190,9 @@ describe Venice::Receipt do
               "auto_renew_product_id"=>"com.foo.product1",
               "original_transaction_id"=>"1000000061051111",
               "product_id"=>"com.foo.product1",
-              "auto_renew_status"=>0,
-              "is_in_billing_retry_period"=>0,
-              "expiration_intent"=>1
+              "auto_renew_status"=>"0",
+              "is_in_billing_retry_period"=>"1",
+              "expiration_intent"=>"1"
             }
           ]
         }
@@ -205,7 +205,7 @@ describe Venice::Receipt do
         expect(subject.to_hash[:pending_renewal_info]).to eql([{ :expiration_intent => 1,
                                                                  :auto_renew_status => 0,
                                                                  :auto_renew_product_id=>"com.foo.product1",
-                                                                 :is_in_billing_retry_period=>false,
+                                                                 :is_in_billing_retry_period=>true,
                                                                  :product_id=>"com.foo.product1",
                                                                  :price_consent_status=>nil,
                                                                  :cancellation_reason=>nil
