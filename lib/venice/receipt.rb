@@ -32,9 +32,11 @@ module Venice
     attr_reader :version_external_identifier
     attr_reader :app_item_id
 
-
     attr_reader :latest_receipt
     attr_reader :latest_receipt_info
+
+    # Information about the status of the customer's auto-renewable subscriptions
+    attr_reader :pending_renewal_info
 
     def initialize(json = {})
       attributes                    = json['receipt']
@@ -71,6 +73,12 @@ module Venice
         []
       end
 
+      @pending_renewal_info = if json['pending_renewal_info']
+        json['pending_renewal_info'].map { |pra| PendingRenewalInfo.new(pra) }
+      else
+        []
+      end
+
       @latest_receipt = json['latest_receipt']
     end
 
@@ -89,7 +97,8 @@ module Venice
         app_item_id:                  @app_item_id,
         in_app:                       @in_app.map{|iap| iap.to_h },
         latest_receipt:               @latest_receipt,
-        latest_receipt_info:          @latest_receipt_info.map{|lri| lri.to_h }
+        latest_receipt_info:          @latest_receipt_info.map{|lri| lri.to_h },
+        pending_renewal_info:         @pending_renewal_info.map { |pend_info| pend_info.to_h },
       }
     end
     alias_method :to_h, :to_hash
